@@ -4,14 +4,17 @@
 // =============================================
 
 import 'dart:async';
+import 'package:chusan/page/DoanhThuPage.dart';
+import 'package:chusan/page/DonDatPage.dart';
+import 'package:chusan/page/HoanTienPage.dart';
+import 'package:chusan/page/KhoaSanPage.dart';
+import 'package:chusan/page/co_so.dart';
 import 'package:chusan/page/hoan_tien.dart';
-import 'package:chusan/page/thong_tin.dart';
 import 'package:flutter/services.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-
 import 'login/AuthService.dart';
 import 'login/CreateCoSoPage.dart';
 import 'login/LoginPage.dart';
@@ -411,8 +414,8 @@ class _ShellState extends State<Shell> {
                 children: [
                   _TabNav(navKey: _navKeys[TabItem.doanhThu]!, builder: (_) => const DoanhThuPage()),
                   _TabNav(navKey: _navKeys[TabItem.donDat]!, builder: (_) => const DonDatPage()),
-                  _TabNav(navKey: _navKeys[TabItem.thongTin]!, builder: (_) => const ThongTinCoSoPage()),
-                  _TabNav(navKey: _navKeys[TabItem.datSan]!, builder: (_) => const DatSanPage()),
+                  _TabNav(navKey: _navKeys[TabItem.thongTin]!, builder: (_) => const CoSoPage()),
+                  _TabNav(navKey: _navKeys[TabItem.datSan]!, builder: (_) => const KhoaSanPage()),
                   _TabNav(navKey: _navKeys[TabItem.hoanTien]!, builder: (_) => const HoanTienPage()),
                   _TabNav(navKey: _navKeys[TabItem.caiDat]!, builder: (_) => const CaiDatPage()),
                 ],
@@ -463,7 +466,7 @@ class _ShellState extends State<Shell> {
           _buildNavItem(Icons.analytics_outlined, Icons.analytics, 'Doanh thu', context),
           _buildNavItem(Icons.receipt_long_outlined, Icons.receipt_long, 'Đơn đặt', context),
           _buildNavItem(Icons.info_outline, Icons.info, 'Thông tin', context),
-          _buildNavItem(Icons.calendar_today_outlined, Icons.calendar_today, 'Đặt sân', context),
+          _buildNavItem(Icons.calendar_today_outlined, Icons.calendar_today, 'Khóa slot', context),
           _buildNavItem(Icons.payment_outlined, Icons.payment, 'Hoàn tiền', context),
           _buildNavItem(Icons.settings_outlined, Icons.settings, 'Cài đặt', context),
         ],
