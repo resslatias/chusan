@@ -74,11 +74,11 @@ class _CreateCoSoPageState extends State<CreateCoSoPage> {
         'gio_dong_cua': _gioDongCua,
         'so_san': _soSan,
         'mo_ta': _moTaCtrl.text.trim(),
-        'is_oke': 0, // Mặc định tắt
-        'vi_tri': null, // Sẽ cập nhật sau
-        'gia_san': [], // Sẽ cập nhật sau
-        'dich_vu_khac': [], // Sẽ cập nhật sau
-        'nhom_se_ve': [], // Sẽ cập nhật sau
+        'is_oke': 0,
+        'vi_tri': null,
+        'gia_san': [],
+        'dich_vu_khac': [],
+        'nhom_xe_ve': [],
         'bang_gia': bangGia,
         'created_at': FieldValue.serverTimestamp(),
       });
@@ -113,12 +113,12 @@ class _CreateCoSoPageState extends State<CreateCoSoPage> {
     for (int i = 0; i < 24; i++) {
       if (i >= gioMo && i < gioDong) {
         if (i < 16) {
-          bangGia[i] = 60000; // Giờ sáng
+          bangGia[i] = 2000; // Giờ sáng
         } else {
-          bangGia[i] = 120000; // Giờ tối
+          bangGia[i] = 3000; // Giờ tối
         }
       } else {
-        bangGia[i] = 0; // Đóng cửa
+        bangGia[i] = 1000; // Đóng cửa
       }
     }
 
@@ -186,12 +186,12 @@ class _CreateCoSoPageState extends State<CreateCoSoPage> {
                 _buildTextField(
                   controller: _tenCoSoCtrl,
                   label: 'Tên cơ sở',
-                  hint: 'VD: Sân Cầu 120 Định Công',
+                  hint: 'VD: Sân Cầu 120 Hoàng Mike',
                   icon: Icons.store,
                   validator: (v) => v?.trim().isEmpty == true ? 'Vui lòng nhập tên cơ sở' : null,
                 ),
                 SizedBox(height: 16),
-
+/*
                 _buildTextField(
                   controller: _sdtCtrl,
                   label: 'Số điện thoại',
@@ -214,7 +214,7 @@ class _CreateCoSoPageState extends State<CreateCoSoPage> {
                   keyboardType: TextInputType.url,
                 ),
                 SizedBox(height: 24),
-
+*/
                 // ĐỊA CHỈ
                 _buildSectionTitle('Địa chỉ'),
                 SizedBox(height: 12),
@@ -222,7 +222,7 @@ class _CreateCoSoPageState extends State<CreateCoSoPage> {
                 _buildTextField(
                   controller: _diaChiChiTietCtrl,
                   label: 'Địa chỉ chi tiết',
-                  hint: 'VD: 120 Định Công',
+                  hint: 'VD: 120 Hoàng Mike',
                   icon: Icons.location_on,
                   validator: (v) => v?.trim().isEmpty == true ? 'Vui lòng nhập địa chỉ' : null,
                 ),
@@ -234,7 +234,7 @@ class _CreateCoSoPageState extends State<CreateCoSoPage> {
                       child: _buildTextField(
                         controller: _xaCtrl,
                         label: 'Phường/Xã',
-                        hint: 'VD: Thanh Xuân',
+                        hint: 'VD: Thank Spring',
                         icon: Icons.home,
                         validator: (v) => v?.trim().isEmpty == true ? 'Nhập phường/xã' : null,
                       ),
@@ -244,7 +244,7 @@ class _CreateCoSoPageState extends State<CreateCoSoPage> {
                       child: _buildTextField(
                         controller: _huyenCtrl,
                         label: 'Quận/Huyện',
-                        hint: 'VD: Hoàng Mai',
+                        hint: 'VD: Hoàng Mike',
                         icon: Icons.location_city,
                         validator: (v) => v?.trim().isEmpty == true ? 'Nhập quận/huyện' : null,
                       ),
@@ -256,7 +256,7 @@ class _CreateCoSoPageState extends State<CreateCoSoPage> {
                 _buildTextField(
                   controller: _tinhCtrl,
                   label: 'Tỉnh/Thành phố',
-                  hint: 'VD: Hà Nội',
+                  hint: 'VD: Lake In',
                   icon: Icons.location_city,
                   validator: (v) => v?.trim().isEmpty == true ? 'Vui lòng nhập tỉnh/thành phố' : null,
                 ),
@@ -313,6 +313,7 @@ class _CreateCoSoPageState extends State<CreateCoSoPage> {
                 SizedBox(height: 16),
 
                 // Giờ mở cửa - đóng cửa
+              /*
                 Row(
                   children: [
                     Expanded(
@@ -342,7 +343,7 @@ class _CreateCoSoPageState extends State<CreateCoSoPage> {
                   maxLines: 4,
                 ),
                 SizedBox(height: 32),
-
+*/
                 // Nút tạo
                 FilledButton(
                   onPressed: _isCreating ? null : _createCoSo,

@@ -21,6 +21,7 @@ class _ChinhSuaDiaChiPageState extends State<ChinhSuaDiaChiPage> {
   final _xaController = TextEditingController();
   final _huyenController = TextEditingController();
   final _tinhController = TextEditingController();
+  final _soSanController = TextEditingController(); // Thêm controller cho số sân
 
   @override
   void initState() {
@@ -35,6 +36,7 @@ class _ChinhSuaDiaChiPageState extends State<ChinhSuaDiaChiPage> {
     _xaController.dispose();
     _huyenController.dispose();
     _tinhController.dispose();
+    _soSanController.dispose(); // Dispose controller số sân
     super.dispose();
   }
 
@@ -63,6 +65,8 @@ class _ChinhSuaDiaChiPageState extends State<ChinhSuaDiaChiPage> {
         _xaController.text = data['xa'] ?? '';
         _huyenController.text = data['huyen'] ?? '';
         _tinhController.text = data['tinh'] ?? '';
+        // Thêm dòng này để tải số sân, chuyển sang string để hiển thị
+        _soSanController.text = (data['so_san'] ?? 0).toString();
       }
     } catch (e) {
       if (mounted) {
@@ -146,6 +150,9 @@ class _ChinhSuaDiaChiPageState extends State<ChinhSuaDiaChiPage> {
                   _buildLockedField("Quận / Huyện", _huyenController),
                   const SizedBox(height: 16),
                   _buildLockedField("Phường / Xã", _xaController),
+                  const SizedBox(height: 16),
+                  // Thêm trường số sân
+                  _buildLockedField("Số sân", _soSanController),
                   const SizedBox(height: 24),
 
                   // THÔNG BÁO ĐỎ

@@ -445,7 +445,7 @@ class _ChinhSuaGioVaGiaPageState extends State<ChinhSuaGioVaGiaPage> {
                         Text(
                           '${index}h-${index+1}h',
                           style: TextStyle(
-                            fontSize: 13,
+                            fontSize: 10,
                             fontWeight: FontWeight.w600,
                             color: isInRange ? Colors.black87 : Colors.grey,
                           ),
