@@ -62,6 +62,7 @@ class _CreateCoSoPageState extends State<CreateCoSoPage> {
           .doc(user.uid)
           .set({
         'ten_co_so': _tenCoSoCtrl.text.trim(),
+        'ten':_tenCoSoCtrl.text.trim(),
         'anh_dai_dien': '',
         'danh_sach_anh': [],
         'dia_chi_chi_tiet': _diaChiChiTietCtrl.text.trim(),
