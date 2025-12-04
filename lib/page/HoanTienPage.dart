@@ -680,7 +680,7 @@ class _ConfirmDialogState extends State<_ConfirmDialog> {
 
   Future<void> _updateFirestore(String url) async {
     final maDon = widget.data['ma_don'] as String;
-    // 🔥 FIX: Lấy user_id từ data (đã được thêm trong _loadAllOrders)
+    //  FIX: Lấy user_id từ data (đã được thêm trong _loadAllOrders)
     final userId = widget.data['user_id'] as String;
     final coSoId = widget.data['co_so_id'] as String;
 
@@ -711,6 +711,14 @@ class _ConfirmDialogState extends State<_ConfirmDialog> {
         .collection('don_dat')
         .doc(maDon);
     batch.update(ref2, updateData);
+
+    // Giảm so_don_huy của người dùng về 0
+    final ref3 = FirebaseFirestore.instance
+        .collection('nguoi_thue')
+        .doc(userId);
+    batch.update(ref3, {
+      'so_don_huy': 0,
+    });
 
     await batch.commit();
   }
