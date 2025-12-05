@@ -205,7 +205,7 @@ class _TrangThaiSanPageState extends State<TrangThaiSanPage> {
                 ),
                 subtitle: Text(
                   isOke
-                      ? 'Bật - Người dùng có thể thấy và đặt sân'
+                      ? 'Bật - Người dùng có thể thấy '
                       : 'Tắt - Người dùng không thể thấy sân',
                 ),
                 value: isOke,

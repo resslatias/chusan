@@ -4,11 +4,11 @@
 // =============================================
 
 import 'dart:async';
-import 'package:chusan/page/DanhGiaPage.dart';
 import 'package:chusan/page/DoanhThuPage.dart';
 import 'package:chusan/page/DonDatPage.dart';
 import 'package:chusan/page/HoanTienPage.dart';
 import 'package:chusan/page/KhoaSanPage.dart';
+import 'package:chusan/page/QuanLyDanhGiaBaoCaoPage.dart';
 import 'package:chusan/page/co_so.dart';
 import 'package:flutter/services.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -417,7 +417,7 @@ class _ShellState extends State<Shell> {
                   _TabNav(navKey: _navKeys[TabItem.thongTin]!, builder: (_) => const CoSoPage()),
                   _TabNav(navKey: _navKeys[TabItem.datSan]!, builder: (_) => const KhoaSanPage()),
                   _TabNav(navKey: _navKeys[TabItem.hoanTien]!, builder: (_) => const HoanTienPage()),
-                  _TabNav(navKey: _navKeys[TabItem.danhGia]!, builder: (_) => const DanhGiaPage()),
+                  _TabNav(navKey: _navKeys[TabItem.danhGia]!, builder: (_) => const QuanLyDanhGiaBaoCaoPage()),
                 ],
               ),
             ),
@@ -468,7 +468,7 @@ class _ShellState extends State<Shell> {
           _buildNavItem(Icons.info_outline, Icons.info, 'Thông tin', context),
           _buildNavItem(Icons.calendar_today_outlined, Icons.calendar_today, 'Khóa slot', context),
           _buildNavItem(Icons.payment_outlined, Icons.payment, 'Hoàn tiền', context),
-          _buildNavItem(Icons.star_outline, Icons.star, 'Đánh giá', context),
+          _buildNavItem(Icons.star_outline, Icons.star, 'Khác', context),
         ],
       ),
     );

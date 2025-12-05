@@ -20,6 +20,8 @@ class _ChinhSuaDichVuPageState extends State<ChinhSuaDichVuPage> {
   List<Map<String, dynamic>> _dichVuKhac = [];
   List<TextEditingController> _tenDVControllers = [];
   List<TextEditingController> _giaDVControllers = [];
+  List<TextEditingController> _donViControllers = [];
+  List<TextEditingController> _soLuongControllers = [];
 
   @override
   void initState() {
@@ -31,6 +33,8 @@ class _ChinhSuaDichVuPageState extends State<ChinhSuaDichVuPage> {
   void dispose() {
     for (var c in _tenDVControllers) c.dispose();
     for (var c in _giaDVControllers) c.dispose();
+    for (var c in _donViControllers) c.dispose();
+    for (var c in _soLuongControllers) c.dispose();
     super.dispose();
   }
 
@@ -53,6 +57,12 @@ class _ChinhSuaDichVuPageState extends State<ChinhSuaDichVuPage> {
           _giaDVControllers = _dichVuKhac
               .map((e) => TextEditingController(text: '${e['gia'] ?? 0}'))
               .toList();
+          _donViControllers = _dichVuKhac
+              .map((e) => TextEditingController(text: '${e['don_vi'] ?? ''}'))
+              .toList();
+          _soLuongControllers = _dichVuKhac
+              .map((e) => TextEditingController(text: '${e['so_luong'] ?? 0}'))
+              .toList();
         });
       }
     } catch (e) {
@@ -73,6 +83,8 @@ class _ChinhSuaDichVuPageState extends State<ChinhSuaDichVuPage> {
       for (int i = 0; i < _dichVuKhac.length; i++) {
         _dichVuKhac[i]['ten'] = _tenDVControllers[i].text;
         _dichVuKhac[i]['gia'] = int.tryParse(_giaDVControllers[i].text) ?? 0;
+        _dichVuKhac[i]['don_vi'] = _donViControllers[i].text;
+        _dichVuKhac[i]['so_luong'] = int.tryParse(_soLuongControllers[i].text) ?? 0;
       }
 
       await _firestore.collection('co_so').doc(_coSoKey).update({
@@ -99,9 +111,16 @@ class _ChinhSuaDichVuPageState extends State<ChinhSuaDichVuPage> {
   // ==================== THÊM DỊCH VỤ ====================
   void _themDichVu() {
     setState(() {
-      _dichVuKhac.add({'ten': 'Dịch vụ mới', 'gia': 0});
-      _tenDVControllers.add(TextEditingController(text: 'Dịch vụ mới'));
+      _dichVuKhac.add({
+        'ten': 'Tiện ích mới',
+        'gia': 0,
+        'don_vi': '',
+        'so_luong': 0,
+      });
+      _tenDVControllers.add(TextEditingController(text: 'Tiện ích mới'));
       _giaDVControllers.add(TextEditingController(text: '0'));
+      _donViControllers.add(TextEditingController(text: ''));
+      _soLuongControllers.add(TextEditingController(text: '0'));
     });
   }
 
@@ -131,8 +150,12 @@ class _ChinhSuaDichVuPageState extends State<ChinhSuaDichVuPage> {
       _dichVuKhac.removeAt(index);
       _tenDVControllers[index].dispose();
       _giaDVControllers[index].dispose();
+      _donViControllers[index].dispose();
+      _soLuongControllers[index].dispose();
       _tenDVControllers.removeAt(index);
       _giaDVControllers.removeAt(index);
+      _donViControllers.removeAt(index);
+      _soLuongControllers.removeAt(index);
     });
   }
 
@@ -177,7 +200,7 @@ class _ChinhSuaDichVuPageState extends State<ChinhSuaDichVuPage> {
                 const SizedBox(width: 12),
                 const Expanded(
                   child: Text(
-                    "Chỉnh sửa dịch vụ",
+                    "Chỉnh sửa tiện ích",
                     style: TextStyle(
                       color: primaryColor,
                       fontSize: 18,
@@ -223,7 +246,7 @@ class _ChinhSuaDichVuPageState extends State<ChinhSuaDichVuPage> {
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
                               const Text(
-                                'Danh sách dịch vụ',
+                                'Danh sách tiện ích',
                                 style: TextStyle(
                                   fontSize: 18,
                                   fontWeight: FontWeight.bold,
@@ -231,7 +254,7 @@ class _ChinhSuaDichVuPageState extends State<ChinhSuaDichVuPage> {
                                 ),
                               ),
                               Text(
-                                '${_dichVuKhac.length} dịch vụ',
+                                '${_dichVuKhac.length} tiện ích',
                                 style: TextStyle(
                                   fontSize: 14,
                                   color: Colors.grey[600],
@@ -253,7 +276,7 @@ class _ChinhSuaDichVuPageState extends State<ChinhSuaDichVuPage> {
                                         color: Colors.grey[400]),
                                     const SizedBox(height: 8),
                                     Text(
-                                      'Chưa có dịch vụ nào',
+                                      'Chưa có tiện ích nào',
                                       style: TextStyle(color: Colors.grey[600]),
                                     ),
                                   ],
@@ -266,64 +289,105 @@ class _ChinhSuaDichVuPageState extends State<ChinhSuaDichVuPage> {
                               physics: const NeverScrollableScrollPhysics(),
                               itemCount: _dichVuKhac.length,
                               itemBuilder: (context, index) {
-                                return Container(
-                                  margin: const EdgeInsets.only(bottom: 12),
-                                  padding: const EdgeInsets.all(12),
-                                  decoration: BoxDecoration(
-                                    color: Colors.white,
-                                    borderRadius: BorderRadius.circular(8),
-                                    border: Border.all(color: Colors.grey[300]!),
-                                  ),
-                                  child: Row(
-                                    children: [
-                                      // Tên dịch vụ
-                                      Expanded(
-                                        flex: 2,
-                                        child: TextField(
-                                          controller: _tenDVControllers[index],
-                                          decoration: const InputDecoration(
-                                            labelText: 'Tên dịch vụ',
-                                            border: OutlineInputBorder(),
-                                            isDense: true,
-                                            contentPadding: EdgeInsets.symmetric(
-                                                horizontal: 12,
-                                                vertical: 10
+                                return Card(
+                                  elevation: 2,
+                                  margin: const EdgeInsets.only(bottom: 16),
+                                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+                                  child: Padding(
+                                    padding: const EdgeInsets.all(16),
+                                    child: Column(
+                                      crossAxisAlignment: CrossAxisAlignment.start,
+                                      children: [
+                                        // TIÊU ĐỀ NHỎ + NÚT XÓA
+                                        Row(
+                                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                          children: [
+                                            Text(
+                                              'Tiện ích ${index + 1}',
+                                              style: const TextStyle(
+                                                fontSize: 16,
+                                                fontWeight: FontWeight.w700,
+                                                color: Color(0xFF2E7D32),
+                                              ),
                                             ),
-                                          ),
-                                        ),
-                                      ),
-                                      const SizedBox(width: 8),
-
-                                      // Giá
-                                      Expanded(
-                                        child: TextField(
-                                          controller: _giaDVControllers[index],
-                                          decoration: const InputDecoration(
-                                            labelText: 'Giá (VND)',
-                                            border: OutlineInputBorder(),
-                                            isDense: true,
-                                            contentPadding: EdgeInsets.symmetric(
-                                                horizontal: 12,
-                                                vertical: 10
-                                            ),
-                                          ),
-                                          keyboardType: TextInputType.number,
-                                          inputFormatters: [
-                                            FilteringTextInputFormatter.digitsOnly
+                                            IconButton(
+                                              icon: const Icon(Icons.delete_outline, color: Colors.red),
+                                              onPressed: () => _xoaDichVu(index),
+                                              splashRadius: 20,
+                                            )
                                           ],
                                         ),
-                                      ),
+                                        const SizedBox(height: 12),
 
-                                      // Nút xóa
-                                      IconButton(
-                                        icon: const Icon(Icons.delete, color: Colors.red),
-                                        onPressed: () => _xoaDichVu(index),
-                                        padding: const EdgeInsets.all(8),
-                                        constraints: const BoxConstraints(),
-                                      ),
-                                    ],
+                                        // TÊN TIỆN ÍCH
+                                        TextField(
+                                          controller: _tenDVControllers[index],
+                                          decoration: InputDecoration(
+                                            labelText: 'Tên tiện ích',
+                                            filled: true,
+                                            fillColor: Colors.grey[100],
+                                            border: OutlineInputBorder(
+                                              borderRadius: BorderRadius.circular(10),
+                                            ),
+                                          ),
+                                        ),
+                                        const SizedBox(height: 12),
+
+                                        // ĐƠN VỊ + SỐ LƯỢNG
+                                        Row(
+                                          children: [
+                                            Expanded(
+                                              child: TextField(
+                                                controller: _donViControllers[index],
+                                                decoration: InputDecoration(
+                                                  labelText: 'Đơn vị',
+                                                  filled: true,
+                                                  fillColor: Colors.grey[100],
+                                                  border: OutlineInputBorder(
+                                                    borderRadius: BorderRadius.circular(10),
+                                                  ),
+                                                ),
+                                              ),
+                                            ),
+                                            const SizedBox(width: 12),
+                                            Expanded(
+                                              child: TextField(
+                                                controller: _soLuongControllers[index],
+                                                keyboardType: TextInputType.number,
+                                                inputFormatters: [FilteringTextInputFormatter.digitsOnly],
+                                                decoration: InputDecoration(
+                                                  labelText: 'Số lượng',
+                                                  filled: true,
+                                                  fillColor: Colors.grey[100],
+                                                  border: OutlineInputBorder(
+                                                    borderRadius: BorderRadius.circular(10),
+                                                  ),
+                                                ),
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+                                        const SizedBox(height: 12),
+
+                                        // GIÁ
+                                        TextField(
+                                          controller: _giaDVControllers[index],
+                                          keyboardType: TextInputType.number,
+                                          inputFormatters: [FilteringTextInputFormatter.digitsOnly],
+                                          decoration: InputDecoration(
+                                            labelText: 'Giá (VNĐ)',
+                                            filled: true,
+                                            fillColor: Colors.grey[100],
+                                            border: OutlineInputBorder(
+                                              borderRadius: BorderRadius.circular(10),
+                                            ),
+                                          ),
+                                        ),
+                                      ],
+                                    ),
                                   ),
                                 );
+
                               },
                             ),
                         ],
@@ -349,7 +413,7 @@ class _ChinhSuaDichVuPageState extends State<ChinhSuaDichVuPage> {
                           Icon(Icons.add_circle_outline, color: primaryColor),
                           const SizedBox(width: 8),
                           Text(
-                            'Thêm dịch vụ mới',
+                            'Thêm tiện ích mới',
                             style: TextStyle(
                               color: primaryColor,
                               fontWeight: FontWeight.w600,

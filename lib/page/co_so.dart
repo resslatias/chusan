@@ -88,7 +88,7 @@ class CoSoPage extends StatelessWidget {
                   _buildButton(
                     context,
                     Icons.home_repair_service,
-                    "Chỉnh sửa dịch vụ",
+                    "Chỉnh sửa tiện ích",
                     onTap: () {
                       Navigator.push(
                         context,
