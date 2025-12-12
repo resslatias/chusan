@@ -107,7 +107,7 @@ class _TrangThaiSanPageState extends State<TrangThaiSanPage> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             const Text('Cần hoàn thành các điều kiện sau:'),
-            const SizedBox(height: 12),
+            const SizedBox(height: 10),
             _buildConditionItem('Ảnh đại diện', _hasAvatar),
             _buildConditionItem('Bảng giá', _hasPrice),
             _buildConditionItem('Cấu hình thanh toán', _hasPayment),
